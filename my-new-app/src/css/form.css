@@ -1,0 +1,22 @@
+@media (min-width:600px){
+    .firstCenterDiv{
+        display:flex;
+    }
+    .secondCenterDiv{
+        margin:auto;
+        width:70%;
+    }
+}
+
+.submitButton{
+    width: 100%;
+}
+
+.helperText{
+    color:red !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color:black !important;
+    background-color: white !important;
+}
