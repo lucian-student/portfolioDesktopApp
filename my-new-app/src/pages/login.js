@@ -1,16 +1,22 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import loginAdmin from '../queries/admin/loginAdmin';
+import { AuthContext } from '../context/auth';
 import '../css/form.css';
 function Login() {
     let btnRef = useRef();
-    const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+    const { setAdmin} = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     async function handleLogin(data) {
-
+        if (btnRef.current) {
+            btnRef.current.setAttribute("disabled", "disabled");
+        }
+        const { name, password } = data;
+        await loginAdmin(name, password,setAdmin, btnRef);
     }
     return (
         <Fragment>
@@ -18,21 +24,17 @@ function Login() {
                 <div className='secondCenterDiv'>
                     <Form onSubmit={handleSubmit(handleLogin)}>
                         <Form.Group controlId="formGroupEmail">
-                            <Form.Label>Email Address</Form.Label>
+                            <Form.Label>Admin name</Form.Label>
                             <Form.Control autoComplete="on"
-                                name='email'
-                                type="email"
-                                placeholder="Enter email"
-                                {...register('email', {
-                                    pattern: regEx,
+                                name='name'
+                                type="text"
+                                placeholder="Enter admin name"
+                                {...register('name', {
                                     required: true
                                 })}
                             />
-                            {errors.email && errors.email.type === "pattern" && (
-                                <Form.Text className="helperText">Email has to be valid!</Form.Text>
-                            )}
                             {errors.email && errors.email.type === "required" && (
-                                <Form.Text className="helperText">Email is empty!</Form.Text>
+                                <Form.Text className="helperText">Admin name is empty!</Form.Text>
                             )}
                         </Form.Group>
                         <Form.Group controlId="formGroupPassword">

@@ -1,22 +1,22 @@
-/*import React, { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { AuthContext } from '../context/auth';*/
+import { AuthContext } from '../context/auth';
 /*
 cesta pro neprihlasene uzivatele
 */
-/*function NotAuthRoute({ component: Component, ...rest }) {
+function NotAuthRoute({ component: Component, ...rest }) {
 
-    const { currentUser } = useContext(AuthContext);
+    const { admin } = useContext(AuthContext);
 
     return (
         <Route
             {...rest}
             render={props =>
-                currentUser ? <Redirect to='/main' /> :
+                admin ? <Redirect to='/main' /> :
                     <Component {...props} />
             }
         />
     )
 }
 
-export default NotAuthRoute;*/
+export default NotAuthRoute;
