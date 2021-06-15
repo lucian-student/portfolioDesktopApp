@@ -1,5 +1,5 @@
-import React, { Fragment, useContext } from 'react';
-//import { AuthContext } from '../context/auth';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../context/auth';
 import { Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
@@ -11,48 +11,37 @@ import '../css/menu.css';
 Navigace aplikace
 */
 function Menu() {
-    //  const { currentUser, logout } = useContext(AuthContext);
-    let pathname = '/';
-    const currentUser = null;
+    const { admin, logout } = useContext(AuthContext);
     return (
         <Container className='menuContainer'>
             <Row>
-                <Col xs={12} md={8}>
-                    {currentUser && (
-                        <Nav variant="pills" defaultActiveKey={`${pathname}`} >
+                <Col >
+                    {admin && (
+                        <Nav variant="pills" defaultActiveKey={`/main`} >
                             <Nav.Item >
-                                <Nav.Link eventKey='/Main' as={Link} to='/Main'>
-                                    Your Recipes
-                                </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item >
-                                <Nav.Link eventKey='/IngredientsAndUtensils' as={Link} to='/IngredientsAndUtensils'>
-                                    Ingredients And Utensils
-                                </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item >
-                                <Nav.Link eventKey='/SharedRecipes' as={Link} to='/SharedRecipes'>
-                                    Shared Recipes
+                                <Nav.Link eventKey='/main' as={Link} to='/main'>
+                                    Main
                                 </Nav.Link>
                             </Nav.Item>
                         </Nav>
                     )}
                 </Col>
-                <Col xs={12} md={4}>
-                    <Nav variant="pills" defaultActiveKey={`${pathname}`} style={{ float: 'right' }}>
-                        {!currentUser ? (
+                <Col>
+                    <Nav variant="pills" defaultActiveKey={`/`} style={{ float: 'right' }}>
+                        {!admin ? (
                             <Fragment>
                                 <Nav.Item >
                                     <Nav.Link eventKey='/' as={Link} to='/'>
                                         Login
-                                            </Nav.Link>
+                                    </Nav.Link>
                                 </Nav.Item>
                             </Fragment>
                         ) : (
                             <Nav.Item >
-                                <Button >
+                                <Button variant='light' style={{ color: 'black !important', backgroundColor: 'white !important' }}
+                                    onClick={logout}>
                                     Logout
-                                    </Button>
+                                </Button>
                             </Nav.Item>
                         )}
                     </Nav>

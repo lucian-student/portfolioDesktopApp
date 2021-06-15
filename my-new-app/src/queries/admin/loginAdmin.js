@@ -1,10 +1,10 @@
-import { transport } from '../../axios/notAuthAxios';
-async function login(name, password, setAdmin, btnRef) {
+import transport from '../../axios/notAuthAxios';
+async function login(name, password, setAdmin, btnRef, source, setLoginErrors) {
     return await transport({
         method: 'post',
         data: { name, password },
         headers: { 'Content-Type': 'application/json' },
-        // cancelToken: source.current.token,
+        cancelToken: source.token,
         url: 'http://localhost:5000/apis/admin/login'
     })
         .then(res => {
@@ -12,7 +12,8 @@ async function login(name, password, setAdmin, btnRef) {
             setAdmin(true);
         })
         .catch(err => {
-            console.error(err.message)
+            setLoginErrors(err.response.data);
+            console.error(err.message);
         }).finally(() => {
             if (btnRef.current) {
                 btnRef.current.removeAttribute("disabled");

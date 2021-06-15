@@ -3,6 +3,6 @@ import axios from 'axios';
 /*
 axios pro api s cookie 
 */
-export const transport = axios.create({
+export default axios.create({
     withCredentials: true
 });

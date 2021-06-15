@@ -1,28 +1,42 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState, useEffect } from 'react';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import loginAdmin from '../queries/admin/loginAdmin';
 import { AuthContext } from '../context/auth';
+import axios from 'axios';
 import '../css/form.css';
 function Login() {
     let btnRef = useRef();
-    const { setAdmin} = useContext(AuthContext);
+    const source = useRef(axios.CancelToken.source());
+    const [loginErrors, setLoginErrors] = useState(null);
+    const { setAdmin } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
+    useEffect(() => {
+        const cancelToken = source.current;
+        return () => {
+            if (cancelToken) {
+                cancelToken.cancel('canceled login');
+            }
+        }
+    }, []);
     async function handleLogin(data) {
         if (btnRef.current) {
             btnRef.current.setAttribute("disabled", "disabled");
         }
         const { name, password } = data;
-        await loginAdmin(name, password,setAdmin, btnRef);
+        await loginAdmin(name, password, setAdmin, btnRef, source.current, setLoginErrors);
     }
     return (
         <Fragment>
             <div className='firstCenterDiv'>
                 <div className='secondCenterDiv'>
                     <Form onSubmit={handleSubmit(handleLogin)}>
+                    {loginErrors && (
+                            <Form.Text className="helperText">{loginErrors}</Form.Text>
+                        )}
                         <Form.Group controlId="formGroupEmail">
                             <Form.Label>Admin name</Form.Label>
                             <Form.Control autoComplete="on"
