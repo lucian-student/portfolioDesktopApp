@@ -14,7 +14,7 @@ function ProjectForm() {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const previewImage = watch('image');
     const [image, setImage] = useState(null);
-    const [result, setResult] = useState(null);
+    // [result, setResult] = useState(null);
 
     useEffect(() => {
         const cancelToken = source.current;
@@ -46,8 +46,8 @@ function ProjectForm() {
 
 
     async function handleData(data) {
-        console.log(data.image[0]);
-        await saveProject(data, source.current,setResult);
+        // console.log(data.image[0]);
+        await saveProject(data, source.current);
     }
     return (
         <Fragment >
@@ -56,7 +56,30 @@ function ProjectForm() {
                     <Form onSubmit={handleSubmit(handleData)}>
                         <Container fluid='lg ' style={{ maxWidth: '100%' }}>
                             <Row>
-                                <Form.Group style={{ width: '100%', padding: 0, margin: 0 }}>
+                                <Form.Group controlId="formGroupUsername">
+                                    <Form.Label>Name</Form.Label>
+                                    <Form.Control autoComplete="on"
+                                        name='name'
+                                        type="text"
+                                        placeholder="Name project"
+                                        {...register('name', {
+                                            required: true,
+                                            minLength: 3,
+                                            maxLength: 20,
+                                        })} />
+                                    {errors.name && errors.name.type === "required" && (
+                                        <Form.Text className="helperText">Name is empty!</Form.Text >
+                                    )}
+                                    {errors.name && errors.name.type === "minLength" && (
+                                        <Form.Text className="helperText">Name has to be atleast 3 chars long!</Form.Text >
+                                    )}
+                                    {errors.name && errors.name.type === "maxLength" && (
+                                        <Form.Text className="helperText">Name cannot be longer than 20 characters!</Form.Text >
+                                    )}
+                                </Form.Group>
+                            </Row>
+                            <Row>
+                                <Form.Group style={{ width: '100%' }}>
                                     <Form.Label>Add Image</Form.Label>
                                     <Form.File name='image'
                                         encType='multipart/form-data'
@@ -81,11 +104,6 @@ function ProjectForm() {
                                     Save project
                                 </Button>
                             </Row>
-                            <Row>
-                                {result && (
-                                    <img src={result} alt={'resultImage'} style={{ width: '100%', height: 'auto' }} />
-                                )}
-                            </Row>
                         </Container>
                     </Form >
                 </div>
@@ -95,3 +113,12 @@ function ProjectForm() {
 }
 
 export default ProjectForm;
+
+
+/*
+ <Row>
+                                {result && (
+                                   <img src={`data:image/png;base64,${result}`} alt="" style={{ width: '100%', height: 'auto' }}/>
+                                )}
+                            </Row>
+*/

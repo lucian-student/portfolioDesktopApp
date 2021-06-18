@@ -1,11 +1,31 @@
-import React from 'react';
-import { Fragment } from 'react';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Containter from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { Link } from 'react-router-dom';
+import ProjectCard from '../components/main/projectCard';
+import getProjects from '../queries/project/getProjects';
+import axios from 'axios';
 function Main() {
+    const [projects, setProjects] = useState(null);
+    const source = useRef(axios.CancelToken.source());
+
+    useEffect(() => {
+        const cancelToken = source.current;
+        return () => {
+            if (cancelToken) {
+                cancelToken.cancel('canceled get projects');
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        const reciveData = async () => {
+            await getProjects(setProjects, source.current);
+        }
+
+        reciveData();
+    }, []);
     return (
         <Fragment>
             <Containter>
@@ -16,7 +36,15 @@ function Main() {
                     </Button>
                 </Row>
                 <Row>
-                    Projects
+                    {projects && (
+                        <Containter>
+                            {projects.map((project) => (
+                                <Row key={project.project_id}>
+                                    <ProjectCard project={project} />
+                                </Row>
+                            ))}
+                        </Containter>
+                    )}
                 </Row>
             </Containter>
         </Fragment>

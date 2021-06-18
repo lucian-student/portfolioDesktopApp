@@ -1,14 +1,12 @@
 import transport from '../../axios/authAxios';
 
+async function saveProject(data, source) {
 
-
-async function saveProject(data, source, setResult) {
-
-    const { image } = data;
+    const { image, name } = data;
 
     const formData = new FormData();
     formData.append('image', image[0]);
-
+    formData.append('name', name);
     return await transport({
         method: 'post',
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -17,12 +15,10 @@ async function saveProject(data, source, setResult) {
         url: 'http://localhost:5000/apis/projects/create_project'
     })
         .then(res => {
+            /* const base64String = btoa(String.fromCharCode(...new Uint8Array(res.data.data)));
+             setResult(base64String);*/
+
             console.log(res.data);
-            const reader = new FileReader();
-            reader.readAsDataURL(res.data);
-            reader.onloadend = function () {
-                setResult([reader.result]);
-            }
         })
         .catch(err => {
             console.error(err.message);
