@@ -4,6 +4,7 @@ import Login from './pages/login';
 import Main from './pages/main';
 import ProjectForm from './pages/projectForm';
 import Loading from './pages/loading';
+import ProjectPage from './pages/projectPage';
 import NotAuthRoute from './routes/notAuthRoute';
 import AdminRoute from './routes/adminRoute';
 import { AuthContext } from './context/auth';
@@ -39,6 +40,7 @@ function App() {
                 <Router>
                     <Menu />
                     <Switch>
+                        <AdminRoute exact path='/project_page/:project_id' component={ProjectPage} />
                         <AdminRoute exact path='/main' component={Main} />
                         <AdminRoute exact path='/project_form' component={ProjectForm} />
                         <NotAuthRoute exact path='/' component={Login} />

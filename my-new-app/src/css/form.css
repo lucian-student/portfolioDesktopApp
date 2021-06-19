@@ -20,3 +20,15 @@
     color:black !important;
     background-color: white !important;
 }
+
+.main_image{
+    width: 50%;
+    height: auto;
+}
+
+@media screen and (max-width:700px) {
+    .main_image{
+        width: 100%;
+        height: auto;
+    }   
+}

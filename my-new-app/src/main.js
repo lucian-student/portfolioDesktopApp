@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, shell } = require('electron');
 const isDev = require('electron-is-dev');
 const path = require('path');
 
@@ -22,6 +22,11 @@ const createWindow = () => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     }
   });
+  // url interceptor open them externally
+  mainWindow.webContents.on("new-window", function (event, url) {
+    event.preventDefault();
+    shell.openExternal(url);
+  });
   // if !dev hide menubar
   if (!isDev) {
     mainWindow.setMenuBarVisibility(false);
@@ -33,6 +38,7 @@ const createWindow = () => {
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
+
 };
 
 // This method will be called when Electron has finished

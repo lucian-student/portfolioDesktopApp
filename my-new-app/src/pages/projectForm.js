@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import isFileImage from '../validators/isFileImage';
 import saveProject from '../queries/project/saveProject';
 import axios from 'axios';
@@ -48,6 +47,7 @@ function ProjectForm() {
     async function handleData(data) {
         // console.log(data.image[0]);
         await saveProject(data, source.current);
+        console.log(data);
     }
     return (
         <Fragment >
@@ -56,7 +56,7 @@ function ProjectForm() {
                     <Form onSubmit={handleSubmit(handleData)}>
                         <Container fluid='lg ' style={{ maxWidth: '100%' }}>
                             <Row>
-                                <Form.Group controlId="formGroupUsername">
+                                <Form.Group controlId="formGroupUsername" style={{ width: '100%' }}>
                                     <Form.Label>Name</Form.Label>
                                     <Form.Control autoComplete="on"
                                         name='name'
@@ -80,8 +80,45 @@ function ProjectForm() {
                             </Row>
                             <Row>
                                 <Form.Group style={{ width: '100%' }}>
+                                    <Form.Label>Description</Form.Label>
+                                    <Form.Control as="textarea" rows={3} style={{ width: '100%' }}
+                                        autoComplete="on"
+                                        name='description'
+                                        type="text"
+                                        placeholder="Description"
+                                        {...register('description', {
+                                            required: true
+                                        })} />
+                                    {errors.description && errors.description.type === "required" && (
+                                        <Form.Text className="helperText">Description is empty!</Form.Text >
+                                    )}
+                                </Form.Group>
+                            </Row>
+                            <Row>
+                                <Form.Group style={{ width: '100%' }}>
+                                    <Form.Label>Github url</Form.Label>
+                                    <Form.Control autoComplete="on"
+                                        name='github_url'
+                                        type="text"
+                                        placeholder="Github url"
+                                        {...register('github_url', {})} />
+                                </Form.Group>
+                            </Row>
+                            <Row>
+                                <Form.Group style={{ width: '100%' }}>
+                                    <Form.Label>Project url</Form.Label>
+                                    <Form.Control autoComplete="on"
+                                        name='project_url'
+                                        type="text"
+                                        placeholder="Project url"
+                                        {...register('project_url', {})} />
+                                </Form.Group>
+                            </Row>
+                            <Row>
+                                <Form.Group style={{ width: '100%' }}>
                                     <Form.Label>Add Image</Form.Label>
                                     <Form.File name='image'
+                                        //multiple={true}
                                         encType='multipart/form-data'
                                         {...register('image', {
                                             validate: {

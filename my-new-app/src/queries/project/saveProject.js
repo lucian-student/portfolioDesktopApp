@@ -2,11 +2,15 @@ import transport from '../../axios/authAxios';
 
 async function saveProject(data, source) {
 
-    const { image, name } = data;
+    const { image, description, github_url, project_url, name } = data;
 
     const formData = new FormData();
     formData.append('image', image[0]);
     formData.append('name', name);
+    formData.append('description', description);
+    formData.append('github_url', github_url);
+    formData.append('project_url', project_url);
+
     return await transport({
         method: 'post',
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -15,10 +19,6 @@ async function saveProject(data, source) {
         url: 'http://localhost:5000/apis/projects/create_project'
     })
         .then(res => {
-            /* const base64String = btoa(String.fromCharCode(...new Uint8Array(res.data.data)));
-             setResult(base64String);*/
-
-            console.log(res.data);
         })
         .catch(err => {
             console.error(err.message);

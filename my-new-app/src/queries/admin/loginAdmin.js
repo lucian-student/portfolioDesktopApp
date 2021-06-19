@@ -13,7 +13,6 @@ async function login(name, password, setAdmin, btnRef, source, setLoginErrors) {
         })
         .catch(err => {
             setLoginErrors(err.response.data);
-            console.error(err.message);
         }).finally(() => {
             if (btnRef.current) {
                 btnRef.current.removeAttribute("disabled");

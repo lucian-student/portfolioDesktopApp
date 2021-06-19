@@ -39,7 +39,7 @@ function Main() {
                     {projects && (
                         <Containter>
                             {projects.map((project) => (
-                                <Row key={project.project_id}>
+                                <Row key={project.project_id} style={{ marginTop: '1rem', marginBottom: '1rem' }}>
                                     <ProjectCard project={project} />
                                 </Row>
                             ))}
