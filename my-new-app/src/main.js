@@ -23,8 +23,7 @@ const createWindow = () => {
     }
   });
   // url interceptor open them externally
-  mainWindow.webContents.on("new-window", function (event, url) {
-    event.preventDefault();
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url);
   });
   // if !dev hide menubar
