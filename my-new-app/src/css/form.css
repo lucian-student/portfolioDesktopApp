@@ -1,34 +1,38 @@
-@media (min-width:600px){
-    .firstCenterDiv{
-        display:flex;
+@media (min-width:600px) {
+    .firstCenterDiv {
+        display: flex;
     }
-    .secondCenterDiv{
-        margin:auto;
-        width:70%;
+
+    .secondCenterDiv {
+        margin: auto;
+        width: 70%;
     }
 }
 
-.submitButton{
+.submitButton {
     width: 100%;
 }
 
-.helperText{
-    color:red !important;
+.helperText {
+    color: red !important;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    color:black !important;
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: black !important;
     background-color: white !important;
 }
 
-.main_image{
+.main_image {
     width: 50%;
     height: auto;
+    border: solid black 0.2em;
+    padding: 0;
 }
 
 @media screen and (max-width:700px) {
-    .main_image{
+    .main_image {
         width: 100%;
         height: auto;
-    }   
+    }
 }

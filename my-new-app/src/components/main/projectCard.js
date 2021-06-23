@@ -34,7 +34,8 @@ function ProjectCard({ project: { project_id, name, data, description, github_ur
                     <Card.Body>
                         <Row style={{ display: 'flex', justifyContent: 'center' }}>
                             {image && (
-                                <img src={`data:image/png;base64,${image}`} alt="" style={{ width: 'auto', height: '5rem' }} />
+                                <img src={`data:image/png;base64,${image}`} alt=""
+                                    style={{ maxWidth: '100%', maxHeight: '10rem', width: 'auto', height: 'auto', border: 'solid black 0.3em', padding: 0 }} />
                             )}
                         </Row>
                     </Card.Body>
@@ -45,4 +46,8 @@ function ProjectCard({ project: { project_id, name, data, description, github_ur
 }
 
 export default ProjectCard;
-
+/*
+ max-height: 200px;
+    max-width: 100%;
+    height: auto;
+    width: auto;*/
