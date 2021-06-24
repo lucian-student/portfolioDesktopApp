@@ -9,7 +9,7 @@ import { AiFillProject } from 'react-icons/ai';
 //const { shell } = window.require('electron');
 
 
-function ProjectDisplay({ project: { project_id, name, description, github_url, project_url, data } }) {
+function ProjectDisplay({ project: { project_id, name, description_eng, description_cz, github_url, project_url, data } }) {
     const [image, setImage] = useState(null);
     useEffect(() => {
         if (data) {
@@ -28,8 +28,23 @@ function ProjectDisplay({ project: { project_id, name, description, github_url, 
                     </Card.Title>
                 </Row>
                 <Row>
+                    <Card.Subtitle>
+                        Description English
+                    </Card.Subtitle>
+                </Row>
+                <Row>
                     <Card.Text>
-                        {description}
+                        {description_eng}
+                    </Card.Text>
+                </Row>
+                <Row>
+                    <Card.Subtitle>
+                        Description Czech
+                    </Card.Subtitle>
+                </Row>
+                <Row>
+                    <Card.Text>
+                        {description_cz}
                     </Card.Text>
                 </Row>
                 <Row style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

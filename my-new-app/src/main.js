@@ -22,6 +22,20 @@ const createWindow = () => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     }
   });
+  //only one instance
+  const gotTheLock = app.requestSingleInstanceLock()
+
+  if (!gotTheLock) {
+    app.quit()
+  } else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+      // Someone tried to run a second instance, we should focus our window.
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore()
+        mainWindow.focus()
+      }
+    });
+  }
   // url interceptor open them externally
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url);

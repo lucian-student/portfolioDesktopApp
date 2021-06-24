@@ -47,7 +47,7 @@ function ProjectForm() {
     async function handleData(data) {
         // console.log(data.image[0]);
         await saveProject(data, source.current);
-        console.log(data);
+        //console.log(data);
     }
     return (
         <Fragment >
@@ -80,13 +80,29 @@ function ProjectForm() {
                             </Row>
                             <Row>
                                 <Form.Group style={{ width: '100%' }}>
-                                    <Form.Label>Description</Form.Label>
+                                    <Form.Label>Description English</Form.Label>
                                     <Form.Control as="textarea" rows={3} style={{ width: '100%' }}
                                         autoComplete="on"
-                                        name='description'
+                                        name='description_eng'
                                         type="text"
-                                        placeholder="Description"
-                                        {...register('description', {
+                                        placeholder="Description English"
+                                        {...register('description_eng', {
+                                            required: true
+                                        })} />
+                                    {errors.description && errors.description.type === "required" && (
+                                        <Form.Text className="helperText">Description is empty!</Form.Text >
+                                    )}
+                                </Form.Group>
+                            </Row>
+                            <Row>
+                                <Form.Group style={{ width: '100%' }}>
+                                    <Form.Label>Description Czech</Form.Label>
+                                    <Form.Control as="textarea" rows={3} style={{ width: '100%' }}
+                                        autoComplete="on"
+                                        name='description_cz'
+                                        type="text"
+                                        placeholder="Description Czech"
+                                        {...register('description_cz', {
                                             required: true
                                         })} />
                                     {errors.description && errors.description.type === "required" && (

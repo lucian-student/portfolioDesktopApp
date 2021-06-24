@@ -8,7 +8,7 @@ import isFileImage from '../../validators/isFileImage';
 import { Fragment } from 'react';
 import axios from 'axios';
 import updateProject from '../../queries/project/updateProject';
-function ProjectEditForm({ project: { project_id, name, description, github_url, project_url, data, setProject } }) {
+function ProjectEditForm({ project: { project_id, name, description_eng, description_cz, github_url, project_url, data, setProject } }) {
     const source = useRef(axios.CancelToken.source());
     const [currImage, setCurrImage] = useState(null);
     const [image, setImage] = useState(null);
@@ -81,14 +81,31 @@ function ProjectEditForm({ project: { project_id, name, description, github_url,
                 </Row>
                 <Row>
                     <Form.Group style={{ width: '100%' }}>
-                        <Form.Label>Description</Form.Label>
+                        <Form.Label>Description English</Form.Label>
                         <Form.Control as="textarea" rows={3} style={{ width: '100%' }}
                             autoComplete="on"
-                            name='description'
-                            defaultValue={description}
+                            name='description_eng'
+                            defaultValue={description_eng}
                             type="text"
-                            placeholder="Description"
-                            {...register('description', {
+                            placeholder="Description English"
+                            {...register('description_eng', {
+                                required: true
+                            })} />
+                        {errors.description && errors.description.type === "required" && (
+                            <Form.Text className="helperText">Description is empty!</Form.Text >
+                        )}
+                    </Form.Group>
+                </Row>
+                <Row>
+                    <Form.Group style={{ width: '100%' }}>
+                        <Form.Label>Description Czech</Form.Label>
+                        <Form.Control as="textarea" rows={3} style={{ width: '100%' }}
+                            autoComplete="on"
+                            name='description_cz'
+                            defaultValue={description_cz}
+                            type="text"
+                            placeholder="Description Czech"
+                            {...register('description_cz', {
                                 required: true
                             })} />
                         {errors.description && errors.description.type === "required" && (

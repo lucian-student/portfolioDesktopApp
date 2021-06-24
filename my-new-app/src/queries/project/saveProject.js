@@ -2,12 +2,13 @@ import transport from '../../axios/authAxios';
 
 async function saveProject(data, source) {
 
-    const { image, description, github_url, project_url, name } = data;
+    const { image, description_eng, description_cz, github_url, project_url, name } = data;
 
     const formData = new FormData();
     formData.append('image', image[0]);
     formData.append('name', name);
-    formData.append('description', description);
+    formData.append('description_eng', description_eng);
+    formData.append('description_cz', description_cz);
     formData.append('github_url', github_url);
     formData.append('project_url', project_url);
 
